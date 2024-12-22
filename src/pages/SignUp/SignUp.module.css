@@ -131,7 +131,8 @@
 
 
     .cont__camp {
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: 30% 70%;
         gap: 2rem;
     }
 
