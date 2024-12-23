@@ -1,22 +1,21 @@
 import { useLoaderData } from "react-router-dom"
 import { getAllImages } from "../../services/imageService"
-import { Image } from "../../types"
+import { allImages, Image } from "../../types"
 import ImageContent from "../../components/ImageContent/ImageContent"
 import { useMemo, useState } from "react"
 import ImageModal from "../../components/ImageModal/ImageModal"
-import { prototypeImage } from "../../data"
 import styles from "./Welcome.module.css"
 
 export async function loader() {
-    const images = await getAllImages()
+    const allImages = await getAllImages()
 
-    return images ?? []
+    return allImages ?? { imagenes: [] }
 }
 
 
 export default function Welcome() {
-    const images = useLoaderData() as Image[]
-    const isEmpty = useMemo(() => images.length === 0, [images]);
+    const { imagenes } = useLoaderData() as allImages
+    const isEmpty = useMemo(() => imagenes.length === 0, [imagenes]);
     const [modal, setModal] = useState(false)
 
     return (
@@ -25,14 +24,16 @@ export default function Welcome() {
                 <h2>Listado de imagenes</h2>
                 <p>A continuacion se muestran las imagenes que se encuentran en la base de datos</p>
             </section>
+            <div className={styles.container__images}>
+                {
+                    isEmpty ? <p>No hay imagenes en la base de datos</p> :
+                        imagenes.map((image) => (
+                            <ImageContent key={image.id} image={image} />
+                        ))
 
+                }
+            </div>
             {/*
-            isEmpty ? <p>No hay imagenes en la base de datos</p> :
-                images.map((image) => (
-                    <ImageContent key={image.id} image={image} />
-                ))
-                */
-            }
             <div className={styles.container__images}>
                 {
                     prototypeImage.map((image) => (
@@ -41,7 +42,9 @@ export default function Welcome() {
                 }
 
             </div>
-            
+
+            */}
+
             <div className={styles.modal__content}>
                 <ImageModal modal={modal} setModal={setModal} />
             </div>

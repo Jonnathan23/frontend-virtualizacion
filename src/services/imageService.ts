@@ -6,15 +6,22 @@ export async function uploadImage(data: DraftImageForm) {
     try {
         const dataForm: DraftImage = { ...data, email: localStorage.getItem('email') as string, contrasenia: localStorage.getItem('password') as string }
         const result = safeParse(DraftImageSchema, dataForm);
+
         console.log(result)
+        console.log(dataForm)
         if (!result.success) {
             console.log(result.issues);
             throw new Error('Validación fallida');
         }
 
-        
-        console.log('Imagen subida correctamente');        
+        await axios.post(`${import.meta.env.VITE_API_URL}/subir_imagen/`, result.output, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+
     } catch (error) {
+        console.log(error)
         throw new Error('Hubo un error')
     }
 }

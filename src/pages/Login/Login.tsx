@@ -6,32 +6,30 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
 
 
 export async function action({ request }: ActionFunctionArgs) {
-    const data = Object.fromEntries(await request.formData())
-    console.log('-----| data |----')
-    console.log(data)
+    const data = Object.fromEntries(await request.formData());
 
-    let error = ''
-
+    // Verifica campos vacíos
     if (Object.values(data).includes('')) {
-        error = 'Todos los campos son obligatorios'
+        return { error: 'Todos los campos son obligatorios' };
     }
 
-    if (error.length) {
-        return error
+    try {
+        const response = await loginUser(data);
+
+        if (response?.success) {
+            return redirect('/virtual/welcome');
+        }
+
+        return { error: response?.error };
+
+    } catch (error: any) {
+        return { error: error.message };
     }
-
-    const response = await loginUser(data)
-
-    if (response) {
-        return redirect('/virtual/welcome')
-    }
-
-    return redirect('/')
 }
 
 
 export default function Login() {
-    const error = useActionData() as string;
+    const actionData = useActionData() as { error?: string };
     return (
         <div className={styles.background__camp}>
             <Form method="POST" >
@@ -57,7 +55,7 @@ export default function Login() {
                                 <input className={styles.camp__txt} type="password" name="password" id="password" placeholder='mi contraseña' />
                             </div>
 
-                            {error && <ErrorMessage>{error}</ErrorMessage>}
+                            {actionData?.error && <ErrorMessage>{actionData.error}</ErrorMessage>}
 
                             <div className={styles.camp + " " + styles.camp__button}>
                                 <input className={styles.button} type="submit" value={'Ingresar'} />

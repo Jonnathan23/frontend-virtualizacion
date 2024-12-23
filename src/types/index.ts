@@ -1,4 +1,4 @@
-import { array, file, InferOutput, object, string } from "valibot";
+import { array, file, InferOutput, number, object, string } from "valibot";
 
 //Schemas - valibot
 export const LoginUserSchema = object({
@@ -27,18 +27,21 @@ export const DraftImageSchemaForm = object({
     descripcion: string()
 })
 export const ImageSchema = object({
-    id: string(),
+    id: number(),
     titulo: string(),
     descripcion: string(),
     url: string(),
     fecha_subida: string()
 })
 
-export const AllImagesSchema = array(ImageSchema)
+export const AllImagesSchema = object({
+    imagenes: array(ImageSchema)
+})
 
 //Types
 export type LoginUser = InferOutput<typeof LoginUserSchema>
 export type RegisterUser = InferOutput<typeof RegisterUserSchema>
 export type Image = InferOutput<typeof ImageSchema>
+export type allImages = InferOutput<typeof AllImagesSchema>
 export type DraftImageForm = InferOutput<typeof DraftImageSchemaForm>
 export type DraftImage = InferOutput<typeof DraftImageSchema>
