@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, Form, redirect, useActionData } from "react-router-dom"
 import ImageFormulary from "../../components/ImageFormulary/ImageFormulary"
 import styles from './Login.module.css'
-import { loginUser } from "../../service/userService"
+import { loginUser } from "../../services/userService"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
 
 

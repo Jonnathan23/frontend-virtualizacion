@@ -2,7 +2,7 @@ import { ActionFunctionArgs, Form, redirect, useActionData } from "react-router-
 import styles from './SignUp.module.css'
 import ImageFormulary from "../../components/ImageFormulary/ImageFormulary"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
-import { signUpUser } from "../../service/userService"
+import { signUpUser } from "../../services/userService"
 import { typeBloods } from "../../data"
 
 export async function action({ request }: ActionFunctionArgs) {

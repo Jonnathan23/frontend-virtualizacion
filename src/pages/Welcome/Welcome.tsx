@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom"
-import { getAllImages } from "../../service/imageService"
+import { getAllImages } from "../../services/imageService"
 import { Image } from "../../types"
 import ImageContent from "../../components/ImageContent/ImageContent"
 import { useMemo, useState } from "react"

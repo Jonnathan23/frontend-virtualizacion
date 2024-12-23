@@ -1,10 +1,15 @@
 import { safeParse } from "valibot"
-import { LoginUserSchema, RegisterUserSchema } from "../types"
+import { LoginUser, LoginUserSchema, RegisterUserSchema } from "../types"
 //import axios from "axios"
 
 
 type ProductData = {
     [k: string]: FormDataEntryValue
+}
+
+const saveInLocalStorage = (user: LoginUser) => {
+    localStorage.setItem('email', user.email)
+    localStorage.setItem('password', user.contrasenia)
 }
 
 export const signUpUser = async (data: ProductData) => {
@@ -28,6 +33,7 @@ export const signUpUser = async (data: ProductData) => {
         console.log(result)
         if (result.success) {
             console.log('Registrado correctamente')
+
 
             /**
              * TODO:
@@ -74,6 +80,9 @@ export const loginUser = async (data: ProductData) => {
 
     if (result.success) {
         console.log('Logeado exitosamente')
+
+        const user: LoginUser = result.output
+        saveInLocalStorage(user)
 
         /**
          * TODO:
