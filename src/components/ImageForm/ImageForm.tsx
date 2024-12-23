@@ -12,9 +12,7 @@ export default function ImageForm() {
 
     const [imageForm, setImageForm] = useState(defaultImage);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const { register, handleSubmit, formState: { errors } } = useForm<DraftImageForm>()
-
-
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<DraftImageForm>()
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -28,12 +26,23 @@ export default function ImageForm() {
     };
 
     const registerImage = async (data: DraftImageForm) => {
-        if (!selectedFile) {
-            throw new Error('Hubo un error')
-        }
+        try {
+            if (!selectedFile) {
+                return
+            }
+            data.archivo = selectedFile
+            const response = await uploadImage(data);
 
-        data.archivo = selectedFile
-        await uploadImage(data);
+            if (response?.success) {
+                reset()
+                setSelectedFile(null);
+                setImageForm(defaultImage);
+                alert('Imagen guardada con exito')
+            }
+
+        } catch (error) {
+
+        }
 
     }
 

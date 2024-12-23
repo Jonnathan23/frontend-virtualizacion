@@ -1,8 +1,8 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import { getAllImages } from "../../services/imageService"
-import { allImages, Image } from "../../types"
+import { allImages } from "../../types"
 import ImageContent from "../../components/ImageContent/ImageContent"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import ImageModal from "../../components/ImageModal/ImageModal"
 import styles from "./Welcome.module.css"
 
@@ -14,6 +14,17 @@ export async function loader() {
 
 
 export default function Welcome() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const email = localStorage.getItem("email");
+        const contrasenia = localStorage.getItem("password");
+
+        // Redirige al login si no hay credenciales en localStorage
+        if (!email || !contrasenia) {
+            navigate("/", { replace: true }); // Evita volver con "atrás"
+        }
+    }, [navigate]);
+
     const { imagenes } = useLoaderData() as allImages
     const isEmpty = useMemo(() => imagenes.length === 0, [imagenes]);
     const [modal, setModal] = useState(false)
@@ -33,18 +44,6 @@ export default function Welcome() {
 
                 }
             </div>
-            {/*
-            <div className={styles.container__images}>
-                {
-                    prototypeImage.map((image) => (
-                        <ImageContent key={image.id} image={image} />
-                    ))
-                }
-
-            </div>
-
-            */}
-
             <div className={styles.modal__content}>
                 <ImageModal modal={modal} setModal={setModal} />
             </div>

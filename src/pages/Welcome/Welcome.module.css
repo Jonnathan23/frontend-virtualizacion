@@ -1,5 +1,5 @@
 .container__images {
-    width: 100%;    
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,6 +12,8 @@
     .container__images {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        row-gap: 4rem;
     }
 
 }
@@ -20,5 +22,10 @@
     .container__images {
         grid-template-columns: repeat(3, 1fr);
     }
+}
 
+@media (min-width: 1280px) {
+    .container__images {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
