@@ -1,22 +1,39 @@
-import { InferOutput, object, string } from "valibot";
+import { array, file, InferOutput, object, string } from "valibot";
 
 //Schemas - valibot
 export const LoginUserSchema = object({
-    us_email: string(),
-    us_password: string()
+    email: string(),
+    contrasenia: string()
 })
 
 export const RegisterUserSchema = object({
-    us_email: string(),
-    us_password: string(),
-    us_ci: string(),
-    us_name: string(),
-    us_lastname: string(),
-    us_address: string(),
-    us_phone: string(),
+    nombre: string(),
+    apellido: string(),
+    tipo_sangre: string(),
+    email: string(),
+    contrasenia: string()
 })
 
+export const DraftImageSchema = object({
+    email: string(),
+    contrasenia: string(),
+    archivo: file(),
+    titulo: string(),
+    descripcion: string()
+})
+
+export const ImageSchema = object({
+    id: string(),
+    titulo: string(),
+    descripcion: string(),
+    url: string(),
+    fecha_subida: string()
+})
+
+export const AllImagesSchema = array(ImageSchema)
 
 //Types
 export type LoginUser = InferOutput<typeof LoginUserSchema>
 export type RegisterUser = InferOutput<typeof RegisterUserSchema>
+export type Image = InferOutput<typeof ImageSchema>
+export type DraftImageSchema = InferOutput<typeof DraftImageSchema>

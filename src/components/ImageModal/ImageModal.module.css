@@ -1,0 +1,114 @@
+.image-modal__button-container {
+    position: fixed;
+    right: 1.25rem; /* 5px in rem */
+    bottom: 1.25rem; /* 5px in rem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-modal__button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.image-modal__icon {
+    width: 4rem; /* 16px in rem */
+    height: 4rem; /* 16px in rem */
+    color: #2563eb; /* Blue-600 */
+    border-radius: 50%;
+}
+
+.image-modal__dialog {
+    position: relative;
+    z-index: 10;
+}
+
+.image-modal__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.image-modal__container {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+}
+
+.image-modal__content {
+    display: flex;
+    min-height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-modal__panel {
+    width: 100%;
+    max-width: 48rem; /* 3xl */
+    background-color: #ffffff;
+    padding: 1.5rem; /* 6px in rem */
+    border-radius: 1rem; /* 2xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+    transform: scale(1);
+    transition: all 0.3s ease-out;
+}
+
+/* Transitions */
+.image-modal__transition-enter {
+    transition: opacity 0.3s ease-out;
+}
+
+.image-modal__transition-enter-from {
+    opacity: 0;
+}
+
+.image-modal__transition-enter-to {
+    opacity: 1;
+}
+
+.image-modal__transition-leave {
+    transition: opacity 0.2s ease-in;
+}
+
+.image-modal__transition-leave-from {
+    opacity: 1;
+}
+
+.image-modal__transition-leave-to {
+    opacity: 0;
+}
+
+.image-modal__panel-enter {
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.image-modal__panel-enter-from {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.image-modal__panel-enter-to {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.image-modal__panel-leave {
+    transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+}
+
+.image-modal__panel-leave-from {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.image-modal__panel-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
+}

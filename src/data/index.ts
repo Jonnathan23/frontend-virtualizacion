@@ -1,0 +1,1 @@
+export const typeBloods = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]

@@ -1,6 +1,6 @@
 import { safeParse } from "valibot"
 import { LoginUserSchema, RegisterUserSchema } from "../types"
-import axios from "axios"
+//import axios from "axios"
 
 
 type ProductData = {
@@ -11,14 +11,19 @@ export const signUpUser = async (data: ProductData) => {
     try {
 
         const result = safeParse(RegisterUserSchema, {
-            us_email: data.us_email as string,
-            us_password: data.us_password as string,
-            us_ci: data.us_ci as string,
-            us_name: data.us_name as string,
-            us_lastname: data.us_lastname as string,
-            us_address: data.us_address as string,
-            us_phone: data.us_phone as string
+            nombre: data.name as string,
+            apellido: data.lastname as string,
+            tipo_sangre: data.blood as string,
+            email: data.email as string,
+            contrasenia: data.password as string,
         })
+
+        console.log(`data.password -> ${data.password}`)
+        console.log(`confirm_data.password -> ${data.confirm_password}`)
+        console.log(`data.password !== data.confirm_password -> ${data.password !== data.confirm_password}`)
+        if (data.password !== data.confirm_password) {
+            throw new Error('Las contraseñas no coinciden')
+        }
 
         console.log(result)
         if (result.success) {
@@ -26,15 +31,15 @@ export const signUpUser = async (data: ProductData) => {
 
             /**
              * TODO:
-                const url = `${import.meta.env.VITE_API_URL}/users`
+                const url = `${import.meta.env.VITE_API_URL}/crear_persona/`
                 const response = await axios.post(url, {
-                    us_email: result.output.us_email,
-                    us_password: result.output.us_password,
-                    us_ci: result.output.us_ci,
-                    us_name: result.output.us_name,
-                    us_lastname: result.output.us_lastname,
-                    us_address: result.output.us_address,
-                    us_phone: result.output.us_phone
+                    email: result.output.email,
+                    password: result.output.password,
+                    ci: result.output.ci,
+                    name: result.output.name,
+                    lastname: result.output.lastname,
+                    address: result.output.address,
+                    phone: result.output.phone
             })
             
             
@@ -60,8 +65,8 @@ export const signUpUser = async (data: ProductData) => {
 
 export const loginUser = async (data: ProductData) => {
     const result = safeParse(LoginUserSchema, {
-        us_email: data.us_email as string,
-        us_password: data.us_password as string,
+        email: data.email as string,
+        contrasenia: data.password as string,
     })
 
     console.log('result')
@@ -72,14 +77,12 @@ export const loginUser = async (data: ProductData) => {
 
         /**
          * TODO:
-            const url = `${import.meta.env.VITE_API_URL}/users`
+            const url = `${import.meta.env.VITE_API_URL}/login/`
             const response = await axios.post(url, {
-                    us_email: result.output.us_email,
-                    us_password: result.output.us_password,
-            })
-            
-            
-            
+                    email: result.output.email,
+                    password: result.output.password,
+            })          
+                        
             if (response.data.status === 'error') {
                 throw new Error(response.data.message);
             }

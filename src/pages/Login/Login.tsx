@@ -46,15 +46,15 @@ export default function Login() {
                             </section>
 
                             <div className={styles.camp}>
-                                <label htmlFor="cli_correo">Correo electrónico </label>
-                                <input className={styles.camp__txt} type="email" name="us_email" id="us_email" placeholder='Ej: ejemplo@gmail.com'
+                                <label htmlFor="correo">Correo electrónico </label>
+                                <input className={styles.camp__txt} type="email" name="email" id="email" placeholder='Ej: ejemplo@gmail.com'
 
                                 />
                             </div>
 
                             <div className={styles.camp}>
-                                <label htmlFor="cli_contrasenia">Contraseña</label>
-                                <input className={styles.camp__txt} type="password" name="us_password" id="us_password" placeholder='mi contraseña' />
+                                <label htmlFor="contrasenia">Contraseña</label>
+                                <input className={styles.camp__txt} type="password" name="password" id="password" placeholder='mi contraseña' />
                             </div>
 
                             {error && <ErrorMessage>{error}</ErrorMessage>}
