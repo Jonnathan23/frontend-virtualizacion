@@ -14,42 +14,42 @@ export default function ImageModal({ modal, setModal }: ImageModalProps) {
 
     return (
         <>
-            <div className={styles['image-modal__button-container']}>
+            <div className={styles["image-modal__trigger-container"]}>
                 <button
                     type="button"
                     onClick={() => setModal(true)}
-                    className={styles['image-modal__button']}
+                    className={styles["image-modal__trigger-button"]}
                 >
-                    <PlusCircleIcon className={styles['image-modal__icon']} />
+                    <PlusCircleIcon className={styles["image-modal__icon"]} />
                 </button>
             </div>
 
             <Transition appear show={modal} as={Fragment}>
-                <Dialog as="div" className={styles['image-modal__dialog']} onClose={() => setModal(false)}>
+                <Dialog as="div" className={styles["image-modal"]} onClose={() => setModal(false)}>
                     <Transition.Child
                         as={Fragment}
-                        enter={styles['image-modal__transition-enter']}
-                        enterFrom={styles['image-modal__transition-enter-from']}
-                        enterTo={styles['image-modal__transition-enter-to']}
-                        leave={styles['image-modal__transition-leave']}
-                        leaveFrom={styles['image-modal__transition-leave-from']}
-                        leaveTo={styles['image-modal__transition-leave-to']}
+                        enter={styles["image-modal__enter"]}
+                        enterFrom={styles["image-modal__enter-from"]}
+                        enterTo={styles["image-modal__enter-to"]}
+                        leave={styles["image-modal__leave"]}
+                        leaveFrom={styles["image-modal__leave-from"]}
+                        leaveTo={styles["image-modal__leave-to"]}
                     >
-                        <div className={styles['image-modal__backdrop']} />
+                        <div className={styles["image-modal__backdrop"]} />
                     </Transition.Child>
 
-                    <div className={styles['image-modal__container']}>
-                        <div className={styles['image-modal__content']}>
+                    <div className={styles["image-modal__container"]}>
+                        <div className={styles["image-modal__content"]}>
                             <Transition.Child
                                 as={Fragment}
-                                enter={styles['image-modal__panel-enter']}
-                                enterFrom={styles['image-modal__panel-enter-from']}
-                                enterTo={styles['image-modal__panel-enter-to']}
-                                leave={styles['image-modal__panel-leave']}
-                                leaveFrom={styles['image-modal__panel-leave-from']}
-                                leaveTo={styles['image-modal__panel-leave-to']}
+                                enter={styles["image-modal__panel-enter"]}
+                                enterFrom={styles["image-modal__panel-enter-from"]}
+                                enterTo={styles["image-modal__panel-enter-to"]}
+                                leave={styles["image-modal__panel-leave"]}
+                                leaveFrom={styles["image-modal__panel-leave-from"]}
+                                leaveTo={styles["image-modal__panel-leave-to"]}
                             >
-                                <Dialog.Panel className={styles['image-modal__panel']}>
+                                <Dialog.Panel className={styles["image-modal__panel"]}>
                                     <ImageForm />
                                 </Dialog.Panel>
                             </Transition.Child>

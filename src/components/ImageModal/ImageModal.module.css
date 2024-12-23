@@ -1,26 +1,27 @@
-.image-modal__button-container {
+/* ImageModal.module.css */
+.image-modal__trigger-container {
     position: fixed;
-    right: 1.25rem; /* 5px in rem */
-    bottom: 1.25rem; /* 5px in rem */
+    right: 1.25rem; /* 5 * 0.25rem */
+    bottom: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.image-modal__button {
+.image-modal__trigger-button {
     background: none;
     border: none;
     cursor: pointer;
 }
 
 .image-modal__icon {
-    width: 4rem; /* 16px in rem */
-    height: 4rem; /* 16px in rem */
-    color: #2563eb; /* Blue-600 */
+    width: 4rem; /* 16 * 0.25rem */
+    height: 4rem;
+    color: #2563eb; /* Tailwind's blue-600 */
     border-radius: 50%;
 }
 
-.image-modal__dialog {
+.image-modal {
     position: relative;
     z-index: 10;
 }
@@ -36,6 +37,7 @@
     inset: 0;
     overflow-y: auto;
     display: flex;
+    min-height: 100vh;
     align-items: center;
     justify-content: center;
     padding: 1rem;
@@ -44,49 +46,50 @@
 
 .image-modal__content {
     display: flex;
-    min-height: 100%;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .image-modal__panel {
+    max-width: 48rem; /* Tailwind's max-w-3xl */
     width: 100%;
-    max-width: 48rem; /* 3xl */
-    background-color: #ffffff;
-    padding: 1.5rem; /* 6px in rem */
-    border-radius: 1rem; /* 2xl */
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
     transform: scale(1);
-    transition: all 0.3s ease-out;
+    overflow: hidden;
+    border-radius: 1rem; /* Tailwind's rounded-2xl */
+    background: #ffffff;
+    padding: 1.5rem;
+    text-align: left;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
-/* Transitions */
-.image-modal__transition-enter {
+.image-modal__enter {
     transition: opacity 0.3s ease-out;
 }
 
-.image-modal__transition-enter-from {
+.image-modal__enter-from {
     opacity: 0;
 }
 
-.image-modal__transition-enter-to {
+.image-modal__enter-to {
     opacity: 1;
 }
 
-.image-modal__transition-leave {
+.image-modal__leave {
     transition: opacity 0.2s ease-in;
 }
 
-.image-modal__transition-leave-from {
+.image-modal__leave-from {
     opacity: 1;
 }
 
-.image-modal__transition-leave-to {
+.image-modal__leave-to {
     opacity: 0;
 }
 
 .image-modal__panel-enter {
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
 .image-modal__panel-enter-from {
@@ -100,7 +103,7 @@
 }
 
 .image-modal__panel-leave {
-    transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+    transition: transform 0.2s ease-in, opacity 0.2s ease-in;
 }
 
 .image-modal__panel-leave-from {

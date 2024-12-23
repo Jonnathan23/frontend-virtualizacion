@@ -29,8 +29,9 @@ export default function Welcome() {
                     <ImageContent key={image.id} image={image} />
                 ))
             }
-
-            <ImageModal modal={modal} setModal={setModal} />
+            <div className="modal__content">
+                <ImageModal modal={modal} setModal={setModal} />
+            </div>
 
 
         </>
