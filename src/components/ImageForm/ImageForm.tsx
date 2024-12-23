@@ -57,10 +57,22 @@ export default function ImageForm() {
                             })}
                         />
                     </div>
-                    
+
+                    <div className={styles.field}>
+                        <label className={styles.field__label} htmlFor="archivo">Seleccione imagen</label>
+                        <input
+                            className={styles.field__file}
+                            type="file"
+                            id="archivo"
+                            onChange={handleChange}
+                        />
+                    </div>
                 </div>
 
-                {errors.titulo && <ErrorMessage>{errors.titulo.message}</ErrorMessage>}
+                <div>
+                    {errors.titulo && <ErrorMessage>{errors.titulo.message}</ErrorMessage>}
+                    {errors.archivo && <ErrorMessage>{errors.archivo.message}</ErrorMessage>}
+                </div>
             </div>
 
             <div className={styles.cont__field}>
@@ -74,20 +86,6 @@ export default function ImageForm() {
                 </div>
                 {errors.descripcion && <ErrorMessage>{errors.descripcion.message}</ErrorMessage>}
             </div>
-
-            <div className={styles.cont__field}>
-                <div className={styles.field}>
-                    <label className={styles.field__label} htmlFor="archivo">Seleccione imagen</label>
-                    <input
-                        className={styles.field__file}
-                        type="file"
-                        id="archivo"
-                        onChange={handleChange}
-                    />
-                </div>
-                {errors.archivo && <ErrorMessage>{errors.archivo.message}</ErrorMessage>}
-            </div>
-
 
             <input className={styles.field__button} type="submit" value={'Guardar imagen'} />
 

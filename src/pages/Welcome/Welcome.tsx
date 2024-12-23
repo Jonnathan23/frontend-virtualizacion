@@ -4,6 +4,9 @@ import { Image } from "../../types"
 import ImageContent from "../../components/ImageContent/ImageContent"
 import { useMemo, useState } from "react"
 import ImageModal from "../../components/ImageModal/ImageModal"
+import { prototypeImage } from "../../data"
+import styles from "./Welcome.module.css"
+
 export async function loader() {
     const images = await getAllImages()
 
@@ -18,18 +21,28 @@ export default function Welcome() {
 
     return (
         <>
-            <h1>Bienvenido</h1>
-            <section>
+            <section className={styles.container__title}>
                 <h2>Listado de imagenes</h2>
                 <p>A continuacion se muestran las imagenes que se encuentran en la base de datos</p>
             </section>
 
-            {isEmpty ? <p>No hay imagenes en la base de datos</p> :
+            {/*
+            isEmpty ? <p>No hay imagenes en la base de datos</p> :
                 images.map((image) => (
                     <ImageContent key={image.id} image={image} />
                 ))
+                */
             }
-            <div className="modal__content">
+            <div className={styles.container__images}>
+                {
+                    prototypeImage.map((image) => (
+                        <ImageContent key={image.id} image={image} />
+                    ))
+                }
+
+            </div>
+            
+            <div className={styles.modal__content}>
                 <ImageModal modal={modal} setModal={setModal} />
             </div>
 

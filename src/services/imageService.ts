@@ -20,7 +20,7 @@ export async function uploadImage(data: DraftImageForm) {
 }
 
 export const getAllImages = async () => {
-    const url = `${import.meta.env.VITE_API_URL}/lista_imagenes`
+    const url = `${import.meta.env.VITE_API_URL}/lista_imagenes/`
     try {
 
         const data = await axios.get(url)
