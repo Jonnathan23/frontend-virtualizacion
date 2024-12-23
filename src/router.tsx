@@ -3,7 +3,6 @@ import Layout from "./layout/Layout";
 import Login, { action as actionLoginUser } from "./pages/Login/Login";
 import Welcome, { loader as loaderImages } from "./pages/Welcome/Welcome";
 import SignUp, { action as actionSignUp } from "./pages/SignUp/SignUp";
-import { action as actionImageForm } from './components/ImageForm/ImageForm'
 
 export const router = createBrowserRouter([
     {
@@ -19,8 +18,7 @@ export const router = createBrowserRouter([
             {
                 path: 'virtual/welcome',
                 element: <Welcome />,
-                loader: loaderImages,
-                action: actionImageForm
+                loader: loaderImages,                
             },
             {
                 path: 'virtual/singup',

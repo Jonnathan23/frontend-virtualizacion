@@ -21,7 +21,11 @@ export const DraftImageSchema = object({
     titulo: string(),
     descripcion: string()
 })
-
+export const DraftImageSchemaForm = object({
+    archivo: file(),
+    titulo: string(),
+    descripcion: string()
+})
 export const ImageSchema = object({
     id: string(),
     titulo: string(),
@@ -36,4 +40,5 @@ export const AllImagesSchema = array(ImageSchema)
 export type LoginUser = InferOutput<typeof LoginUserSchema>
 export type RegisterUser = InferOutput<typeof RegisterUserSchema>
 export type Image = InferOutput<typeof ImageSchema>
-export type DraftImageSchema = InferOutput<typeof DraftImageSchema>
+export type DraftImageForm = InferOutput<typeof DraftImageSchemaForm>
+export type DraftImage = InferOutput<typeof DraftImageSchema>

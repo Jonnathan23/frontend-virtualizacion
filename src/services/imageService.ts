@@ -1,30 +1,19 @@
 import axios from "axios"
 import { safeParse } from "valibot"
-import { AllImagesSchema, DraftImageSchema } from "../types"
+import { AllImagesSchema, DraftImage, DraftImageForm, DraftImageSchema } from "../types"
 
-interface ImageData {
-    [k: string]: FormDataEntryValue
-}
-
-export async function uploadImage(data: ImageData) {
+export async function uploadImage(data: DraftImageForm) {
     try {
-
-        console.log(data.email)
-        console.log(data.contrasenia)
-        console.log(data)
-
-        const result = safeParse(DraftImageSchema, {
-            email: data.email as string,
-            contrasenia: data.contrasenia as string,
-            archivo: data.file as File,
-            titulo: data.title as string,
-            descripcion: data.description as string
-        })
+        const dataForm: DraftImage = { ...data, email: localStorage.getItem('email') as string, contrasenia: localStorage.getItem('password') as string }
+        const result = safeParse(DraftImageSchema, dataForm);
         console.log(result)
-        if (result.success) {
-            console.log('Imagen subida correctamente')
+        if (!result.success) {
+            console.log(result.issues);
+            throw new Error('Validación fallida');
         }
 
+        
+        console.log('Imagen subida correctamente');        
     } catch (error) {
         throw new Error('Hubo un error')
     }
