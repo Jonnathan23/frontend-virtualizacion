@@ -59,9 +59,20 @@
     color: var(--marine-blue);
     border: solid .1rem var(--pastel-blue);
     border-radius: .5rem;
+    transition: all .2s ease;
 
 }
 
+.camp__txt:focus {
+    outline: none;
+    scale: 1.02;
+    transition: all .2s ease;
+}
+
+.camp__txt::placeholder{
+    color: var(--purplish-blue);
+    opacity: .3;
+}
 
 .camp__cont__cb {
     display: flex;
