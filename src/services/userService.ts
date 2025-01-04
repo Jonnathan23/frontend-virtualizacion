@@ -1,6 +1,7 @@
 import { safeParse } from "valibot"
 import { LoginUser, LoginUserSchema, RegisterUserSchema } from "../types"
-import axios from "axios"
+import { isAxiosError } from "axios"
+import api from "../lib/axios"
 //import axios from "axios"
 
 
@@ -31,15 +32,15 @@ export const signUpUser = async (data: ProductData) => {
             throw new Error('Las contraseñas no coinciden');
         }
 
-        const url = `${import.meta.env.VITE_API_URL}/crear_persona/`;
-
-        const response = await axios.post(url, {
+        const response = await api.post('/crear_persona/', {
             nombre: result.output.nombre,
             apellido: result.output.apellido,
             tipo_sangre: result.output.tipo_sangre,
             email: result.output.email,
             contrasenia: result.output.contrasenia,
         });
+        console.log('response:')
+        console.log(response)
 
         // Verifica respuesta del servidor
         if (response.status !== 200 || response.data.status === 'error') {
@@ -48,8 +49,8 @@ export const signUpUser = async (data: ProductData) => {
 
         return { success: true, data: response.data };
     } catch (error: any) {
-        
-        if (axios.isAxiosError(error) && error.response) {
+
+        if (isAxiosError(error) && error.response) {
             const { status, data } = error.response;
             if (status === 401 || status === 404) {
                 return { success: false, error: data.error }; // Error controlado del backend
@@ -69,13 +70,14 @@ export const loginUser = async (data: ProductData) => {
     console.log(result)
 
     if (result.success) {
-
-        const url = `${import.meta.env.VITE_API_URL}/login/`
         try {
-            const response = await axios.post(url, {
+            const response = await api.post('/login/', {
                 email: result.output.email,
                 contrasenia: result.output.contrasenia,
             })
+
+            console.log('response:')
+            console.log(response)
 
             if (response.status === 200) {
                 const user: LoginUser = result.output;
@@ -86,7 +88,7 @@ export const loginUser = async (data: ProductData) => {
 
         } catch (error) {
 
-            if (axios.isAxiosError(error) && error.response) {
+            if (isAxiosError(error) && error.response) {
                 const { status, data } = error.response;
                 if (status === 401 || status === 404) {
                     return { success: false, error: data.error }; // Error controlado del backend

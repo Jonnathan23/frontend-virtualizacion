@@ -5,10 +5,14 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import { useForm } from "react-hook-form";
 import { DraftImageForm } from "../../types";
 import { uploadImage } from "../../services/imageService";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 export default function ImageForm() {
     const defaultImage = '../../../public/selectImage.jpg';
+
+    const navigate = useNavigate()
 
     const [imageForm, setImageForm] = useState(defaultImage);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -37,11 +41,14 @@ export default function ImageForm() {
                 reset()
                 setSelectedFile(null);
                 setImageForm(defaultImage);
-                alert('Imagen guardada con exito')
+                toast.success('Imagen subida con exito')
+                navigate('/virtual/welcome')
+            } else {
+                toast.error(response?.error)
             }
 
         } catch (error) {
-
+            toast.error('Error al subir la imagen')
         }
 
     }
