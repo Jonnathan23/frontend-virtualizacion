@@ -64,6 +64,10 @@
     transition: background-color .3s ease, transform .3s ease;
 }
 
+.field__button:disabled {
+    opacity: .3;
+}
+
 .field__file {
     display: none;
 }

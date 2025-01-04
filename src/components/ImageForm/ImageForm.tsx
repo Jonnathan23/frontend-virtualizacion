@@ -14,6 +14,8 @@ export default function ImageForm() {
 
     const navigate = useNavigate()
 
+    const [saving, setSaving] = useState(false);
+
     const [imageForm, setImageForm] = useState(defaultImage);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<DraftImageForm>()
@@ -35,8 +37,10 @@ export default function ImageForm() {
                 return
             }
             data.archivo = selectedFile
+            setSaving(true)
             const response = await uploadImage(data);
 
+            setSaving(false)
             if (response?.success) {
                 reset()
                 setSelectedFile(null);
@@ -103,7 +107,7 @@ export default function ImageForm() {
                 {errors.descripcion && <ErrorMessage>{errors.descripcion.message}</ErrorMessage>}
             </div>
 
-            <input className={styles.field__button} type="submit" value={'Guardar imagen'} />
+            <input className={styles.field__button} type="submit" value={saving ?'Guardando...':'Guardar imagen'} disabled={saving} />
 
         </form>
     )

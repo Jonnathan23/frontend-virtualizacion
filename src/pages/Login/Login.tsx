@@ -3,6 +3,7 @@ import ImageFormulary from "../../components/ImageFormulary/ImageFormulary"
 import styles from './Login.module.css'
 import { loginUser } from "../../services/userService"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
+import {  useEffect, useState } from "react"
 
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -14,6 +15,7 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 
     try {
+
         const response = await loginUser(data);
 
         if (response?.success) {
@@ -29,10 +31,15 @@ export async function action({ request }: ActionFunctionArgs) {
 
 
 export default function Login() {
+    const [isSaving, setSaving] = useState(false);
     const actionData = useActionData() as { error?: string };
+
+    useEffect(() => { actionData?.error && setSaving(false) }, [actionData])
+    const handleSubmit = async () => setSaving(true);
+
     return (
         <div className={styles.background__camp}>
-            <Form method="POST" >
+            <Form method="POST" onSubmit={handleSubmit}>
                 <fieldset className={styles.fieldset}>
                     <div className={styles.cont__camp}>
                         <ImageFormulary />
@@ -58,7 +65,7 @@ export default function Login() {
                             {actionData?.error && <ErrorMessage>{actionData.error}</ErrorMessage>}
 
                             <div className={styles.camp + " " + styles.camp__button}>
-                                <input className={styles.button} type="submit" value={'Ingresar'} />
+                                <input className={styles.button} type="submit" value={isSaving ? 'Ingresando...' : 'Ingresar'} disabled={isSaving} />
                             </div>
 
                         </div>
