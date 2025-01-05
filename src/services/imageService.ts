@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios"
 import { safeParse } from "valibot"
-import { AllImagesSchema } from "../types"
+import { AllImagesSchema, Image } from "../types"
 import api from "../lib/axios";
 
 
@@ -21,14 +21,14 @@ export async function uploadImage(data: { archivo: File; titulo: string; descrip
     formData.append('email', email);
     formData.append('contrasenia', contrasenia);
 
-    
+
     const response = await api.post('/subir_imagen/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
 
-    if (response.status === 201) {      
+    if (response.status === 201) {
       return { success: true, data: response.data };
     } else {
       return { success: false, error: response.data.error };
@@ -65,13 +65,26 @@ export const getAllImages = async () => {
   }
 }
 
-export const deleteImage = async () => {
+export const deleteImage = async (imageId: Image['id']) => {
   const email = localStorage.getItem('email');
   const contrasenia = localStorage.getItem('password');
 
   try {
     if (!email || !contrasenia) {
       throw new Error('Credenciales no encontradas');
+    }
+    const response = await api.delete('/eliminar_imagen/',  {
+      data: {
+        email: email,
+        contrasenia: contrasenia,
+        imagen_id: imageId,
+      },
+    });
+
+    if (response.status === 200) {
+      return { success: true, data: response.data };
+    } else {
+      return { success: false, error: response.data.error };
     }
   } catch (error) {
     console.error(error);
