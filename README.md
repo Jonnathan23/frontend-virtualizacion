@@ -59,6 +59,7 @@ Desde tu máquina local, intenta conectarte a la VM para probar la autenticació
 
 Si todo está configurado correctamente, no te pedirá contraseña.
 
+---
 
 ## Paso 3: Transferir Archivos con SCP
 
@@ -69,7 +70,55 @@ Usa el comando `scp` para transferir archivos o directorios:
 Este comando copiará el directorio `dist` desde tu máquina local al directorio de inicio del usuario en el servidor remoto.
 
 
+## Paso 4: Instalar y configurar un servidor web
 
+1. Instala NGINX si no está instalado:
+  ```bash
+   sudo apt update
+   sudo apt install nginx -y
+   ```
+2. Verifica que NGINX esté en funcionamiento:
+
+```bash
+   sudo systemctl status nginx
+   ```
+3. Configurar NGINX para servir el frontend
+Editar la configuración de NGINX:
+```bash
+   sudo nano /etc/nginx/sites-available/default
+   ```
+Reemplaza el contenido del archivo con lo siguiente:
+
+```bash
+  server {
+    listen 80;
+    server_name _;
+
+    root /home/<UsuarioVM>/dist;
+    index index.html;
+
+    location / {
+        try_files $uri /index.html;
+    }
+}
+   ```
+4. Guarda y cierra el archivo (en nano, usa Ctrl+O, luego Enter y Ctrl+X).
+5. Prueba la configuración:
+ ```bash
+   sudo nginx -t
+   ```
+6. Reinicia NGINX:
+```bash
+   sudo systemctl restart nginx
+   ```
+
+---
+
+
+## Paso 5: Acceder al frontend
+
+
+Abre tu navegador y visita la IP de tu VM por ejemplo, `http://<IP_EXTERNA>`.
 
 
 
