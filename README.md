@@ -1,81 +1,77 @@
-# Guía para Transferir Archivos a un Servidor Remoto con SCP
+# Frontend para Google Cloud Virtual Machines (VM)
 
-## Paso 1: Configurar Clave SSH en el Sistema Local
 
-1. Abre una terminal en tu sistema Windows.
-2. Genera un par de claves SSH:
-   ```bash
+## Paso 1: Clonar el repositorio y poner la ip correcta en axios.ts
+
+ ```bash
+const api = axios.create({
+    baseURL: "http://<DIRECCION_IP>/api"
+})
+```
+Seguido de esto correr el siguiente comando para crear una versión optimizada y lista para producción
+ ```bash
+ npm run build 
+   ```
+Esto generara una carpeta llamada dist que es lo que debemos pasar a la VM 
+
+---
+
+## Paso 2: Agregar tu clave pública a la VM
+
+1. Usar PowerShell para verificar claves SSH:
+Verifica si tienes un directorio .ssh en tu perfil:
+ ```bash
+ dir $env:USERPROFILE\.ssh
+   ```
+Busca un archivo llamado id_rsa.pub o id_ecdsa.pub. Si no tienes uno, genera una clave SSH:
+ ```bash
    ssh-keygen -t rsa -b 4096
    ```
-   - Cuando te pregunte el nombre del archivo para guardar la clave, presiona **Enter** para usar la ruta predeterminada (`C:\Users\<TuUsuario>\.ssh\id_rsa`).
-   - Si deseas, puedes establecer una frase de paso (opcional).
+La clave se guardará en `C:\Users\TU_USUARIO\.ssh`.
 
-3. Localiza tu clave pública:
-   ```bash
-   dir %USERPROFILE%\.ssh
+
+2. Copiar la clave pública a la VM
+Si ya tienes la clave pública, puedes usarla para autenticarte con la VM.
+
+Abre tu clave pública con PowerShell:
+ ```bash
+   notepad "C:\Users\usuario\.ssh\id_rsa.pub"
    ```
-   El archivo `id_rsa.pub` contiene tu clave pública.
+Copia el contenido completo, conéctate a la VM desde el navegador en la consola de Google Cloud (botón SSH). En la VM, añade la clave pública al archivo ~/.ssh/authorized_keys:
 
-## Paso 2: Configurar la Clave Pública en el Servidor Remoto
+Accede a la VM usando el cliente SSH de Google Cloud Console: Ve a Compute Engine > Instancias de VM en Google Cloud Console. Haz clic en SSH al lado de tu VM para abrir una terminal. Una vez dentro de la VM:
 
-1. Conéctate al servidor remoto utilizando las credenciales existentes:
-   ```bash
+ ```bash
+   mkdir -p ~/.ssh
+   echo "<TU_CLAVE_PUBLICA>" >> ~/.ssh/authorized_keys
+   chmod 600 ~/.ssh/authorized_keys
+   chmod 700 ~/.ssh
+   ```
+
+
+Reemplaza <TU_CLAVE_PUBLICA> por el contenido de tu clave pública.
+
+3. Probar la conexión
+Desde tu máquina local, intenta conectarte a la VM para probar la autenticación con claves:
+ ```bash
    ssh <usuario_remoto>@<ip_del_servidor>
    ```
-2. Crea el directorio `.ssh` en el servidor remoto (si no existe):
-   ```bash
-   mkdir -p ~/.ssh
-   ```
-3. Copia la clave pública desde tu máquina local al servidor remoto. Usa este comando desde tu máquina local:
-   ```bash
-   scp %USERPROFILE%\.ssh\id_rsa.pub <usuario_remoto>@<ip_del_servidor>:~
-   ```
-4. En el servidor remoto, mueve la clave al archivo `authorized_keys`:
-   ```bash
-   cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
-   rm ~/id_rsa.pub
-   ```
-5. Establece los permisos correctos en el servidor remoto:
-   ```bash
-   chmod 700 ~/.ssh
-   chmod 600 ~/.ssh/authorized_keys
-   ```
+
+Si todo está configurado correctamente, no te pedirá contraseña.
+
 
 ## Paso 3: Transferir Archivos con SCP
 
-1. Usa el comando `scp` para transferir archivos o directorios:
+Usa el comando `scp` para transferir archivos o directorios:
    ```bash
    scp -r "C:\Users\<TuUsuario>\Desktop\frontend-virtualizacion\dist" <usuario_remoto>@<ip_del_servidor>:~
    ```
-   Este comando copiará el directorio `dist` desde tu máquina local al directorio de inicio del usuario en el servidor remoto.
+Este comando copiará el directorio `dist` desde tu máquina local al directorio de inicio del usuario en el servidor remoto.
 
-2. Si necesitas mover los archivos al directorio web del servidor remoto, como `/var/www/html`, hazlo después de conectarte al servidor:
-   ```bash
-   ssh <usuario_remoto>@<ip_del_servidor>
-   sudo mv ~/dist /var/www/html
-   ```
 
-## Paso 4: Verificar la Transferencia
 
-1. Conéctate al servidor remoto:
-   ```bash
-   ssh <usuario_remoto>@<ip_del_servidor>
-   ```
-2. Verifica que los archivos se hayan copiado correctamente:
-   ```bash
-   ls /var/www/html
-   ```
 
-## Paso 5: Configuración Final (Opcional)
 
-- Asegúrate de que el servidor web (como Apache o Nginx) esté configurado para servir los archivos desde `/var/www/html`.
-- Reinicia el servidor web para aplicar los cambios:
-  ```bash
-  sudo systemctl restart apache2
-  ```
-  o
-  ```bash
-  sudo systemctl restart nginx
-  ```
 
-Con estos pasos, tus archivos deberían estar correctamente transferidos y accesibles en el servidor remoto.
+
+
