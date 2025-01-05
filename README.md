@@ -126,6 +126,7 @@ Reemplaza el contenido del archivo con lo siguiente:
 
 Abre tu navegador y visita la IP de tu VM por ejemplo, `http://<IP_EXTERNA>`.
 
+---
 
 ## Paso 6: Configurar HTTPS
 Para mayor seguridad, puedes agregar un certificado SSL gratuito con Certbot y Let's Encrypt:
