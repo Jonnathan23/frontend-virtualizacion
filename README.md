@@ -46,6 +46,9 @@ Accede a la VM usando el cliente SSH de Google Cloud Console: Ve a Compute Engin
    echo "<TU_CLAVE_PUBLICA>" >> ~/.ssh/authorized_keys
    chmod 600 ~/.ssh/authorized_keys
    chmod 700 ~/.ssh
+   sudo chown -R www-data:www-data /home/elprimooficial3/dist
+   sudo chmod -R 755 /home/elprimooficial3/dist
+
    ```
 
 
@@ -91,16 +94,19 @@ Reemplaza el contenido del archivo con lo siguiente:
 
 ```bash
   server {
-    listen 80;
-    server_name _;
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
     root /home/<UsuarioVM>/dist;
     index index.html;
+
+    server_name _;
 
     location / {
         try_files $uri /index.html;
     }
 }
+
    ```
 4. Guarda y cierra el archivo (en nano, usa Ctrl+O, luego Enter y Ctrl+X).
 5. Prueba la configuración:
@@ -121,6 +127,16 @@ Reemplaza el contenido del archivo con lo siguiente:
 Abre tu navegador y visita la IP de tu VM por ejemplo, `http://<IP_EXTERNA>`.
 
 
-
+## Paso 6: Configurar HTTPS
+Para mayor seguridad, puedes agregar un certificado SSL gratuito con Certbot y Let's Encrypt:
+1. Instala Certbot:
+```bash
+   sudo apt install certbot python3-certbot-nginx -y
+   ```
+2. Genera un certificado para tu dominio o la IP pública:
+```bash
+   sudo certbot --nginx
+   ```
+3. Sigue las instrucciones y, al finalizar, tu sitio estará disponible en `https://`
 
 
